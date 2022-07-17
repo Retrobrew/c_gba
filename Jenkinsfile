@@ -20,7 +20,7 @@ pipeline {
             }
             steps {
                 script {
-                    withCredentials(usernamePassword(credentialsId: 'AKIA2CPOUL52TSUWSV73', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    withCredentials([usernamePassword(credentialsId: 'AKIA2CPOUL52TSUWSV73', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                         nodejs(nodeJSInstallationName: 'nodejs') {
                             sh "docker push AKIA2CPOUL52TSUWSV73.dkr.ecr.eu-west-1.amazonaws.com/gba-c:latest"
                         }
