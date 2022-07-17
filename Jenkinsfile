@@ -45,9 +45,7 @@ pipeline {
             steps {
                 script {
                     nodejs(nodeJSInstallationName: 'nodejs') {
-                        sh "docker image ls"
                         sh "for i in `docker images |grep 'gba-c' | awk -F' ' '{print \$3}'`; do if [ ! -z \"`docker images |grep \$i`\" ]; then docker rmi \$i --force; fi; done"
-                        sh "docker image ls"
                     }
                 }
             }
