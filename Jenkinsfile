@@ -16,7 +16,7 @@ pipeline {
                 script {
                     nodejs(nodeJSInstallationName: 'nodejs'){
                         def docker = tool 'docker-agent';
-                        sh('docker build -t gba-c .');
+                        sh('docker build --no-cache -t gba-c .');
                     }
                 }
             }
@@ -37,6 +37,17 @@ pipeline {
                             sh "docker tag gba-c:latest 692527062901.dkr.ecr.eu-west-1.amazonaws.com/gba-c:latest"
                             sh "docker push 692527062901.dkr.ecr.eu-west-1.amazonaws.com/gba-c:latest"
                         }
+                    }
+                }
+            }
+        }
+        stage("Cleanup") {
+            steps {
+                script {
+                    nodejs(nodeJSInstallationName: 'nodejs') {
+                        sh "docker image ls"
+                        sh "for i in `docker images |grep 'gba-c' | awk -F' ' '{print \$3}'`; do if [ ! -z \"`docker images |grep \$i`\" ]; then docker rmi \$i --force; fi; done"
+                        sh "docker image ls"
                     }
                 }
             }
