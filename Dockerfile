@@ -4,4 +4,4 @@ RUN apt-get clean autoclean && apt-get autoremove --yes && rm -rf /var/lib/{apt,
 RUN mkdir -p /data
 COPY make.sh /
 RUN chmod +x make.sh
-CMD bwrap --unshare-all --share-net --ro-bind / / --dev-bind /data /data ./make.sh 
+CMD bwrap --unshare-all --share-net --ro-bind / / --dev-bind /data /data --dev-bind /dev/ /dev/ ./make.sh 
